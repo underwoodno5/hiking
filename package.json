@@ -1,0 +1,29 @@
+{
+  "name": "hike",
+  "version": "1.0.0",
+  "description": "MERN based application for east coast NL hiking information",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/underwoodno5/hiking.git"
+  },
+  "keywords": [
+    "hiking",
+    "node",
+    "react",
+    "graphql"
+  ],
+  "author": "alltheveg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/underwoodno5/hiking/issues"
+  },
+  "homepage": "https://github.com/underwoodno5/hiking#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.2.6"
+  }
+}

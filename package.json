@@ -4,7 +4,10 @@
   "description": "MERN based application for east coast NL hiking information",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "cd server && nodemon index",
+    "start:client":"cd client && npm start",
+    "start:app": "concurrently \"npm run-script start:dev\" \"npm run-script start:client\""
   },
   "repository": {
     "type": "git",
@@ -23,7 +26,10 @@
   },
   "homepage": "https://github.com/underwoodno5/hiking#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "concurrently": "^3.6.1",
     "express": "^4.16.3",
+    "graphql-yoga": "^1.15.1",
     "mongoose": "^5.2.6"
   }
 }

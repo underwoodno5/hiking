@@ -18,11 +18,26 @@
   font-size: 1.5em;
 }
 
-.App-intro {
-  font-size: large;
+body{
+  background-color: #e4e1e1;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.root {
+  flex-grow: 1;
+}
+
+.hikeList{
+  width: 80%;
+  margin:20px auto;
+  padding: 5px;
+}
+
+.titleName {
+  flex-grow: 1;
+  text-align:center;
+}
+
+.menuButton {
+  margin-left: -12;
+  margin-right: 20;
 }

@@ -41,3 +41,17 @@ body{
   margin-left: -12;
   margin-right: 20;
 }
+
+.tabindex{
+  width: 15vw;
+}
+.login{
+  display: inline-block !important;
+  margin-left: auto !important;
+  margin-right: 2vw !important;
+  color:white !important;
+}
+
+.login button{
+  color:white !important;
+}

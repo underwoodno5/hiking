@@ -12,9 +12,7 @@ class App extends Component {
       <div>
       <Nav>
       </Nav>
-     
-      <HikeList>
-      </HikeList>
+      <HikeList />
       </div>
     );
   }

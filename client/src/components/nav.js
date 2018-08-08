@@ -8,6 +8,9 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
+import LoginWrapped from './login';
+
 
 
 class Nav extends React.Component {
@@ -24,12 +27,26 @@ class Nav extends React.Component {
     });
   };
 
+  
+
   render() {
     const sideList = (
       <div className="list">
         <List>
-          <ListItem button component="a" href="">
-          <ListItemText primary="login" />
+          <ListItem>
+            <Typography variant="title" color="inherit" className="flex">
+              Menu
+            </Typography>
+          </ListItem>
+          <Divider />
+          <ListItem button component="a" href="#">
+            <ListItemText primary="My Account" />
+          </ListItem>
+          <ListItem button component="a" href="#">
+            <ListItemText primary="Hikes in my area" />
+          </ListItem>
+          <ListItem button component="a" href="#">
+            <ListItemText primary="Find Hike By Name" />
           </ListItem>
         </List>
       </div>
@@ -53,6 +70,8 @@ class Nav extends React.Component {
           <Typography variant="title" color="inherit" className="flex">
             News
           </Typography>
+          <LoginWrapped>
+          </LoginWrapped>
         </Toolbar>
       </AppBar>
        <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>

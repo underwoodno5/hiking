@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import TextField from './loginform';
 
 
+
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -47,8 +48,6 @@ class Login extends React.Component {
       <div  className="login">
         <Button onClick={this.handleOpen}>Login</Button>
         <Modal
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
           open={this.state.open}
           onClose={this.handleClose}
         >
@@ -56,7 +55,6 @@ class Login extends React.Component {
 
             <TextField>
             </TextField>
-            <LoginWrapped />
           </div>
         </Modal>
       </div>

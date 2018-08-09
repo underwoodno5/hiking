@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Lock from '@material-ui/icons/Lock';
+
 
 
 const styles = theme => ({
@@ -37,6 +41,13 @@ class TextFields extends React.Component {
       label="Name"
       className={classes.textField}
       margin="normal"
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <AccountCircle />
+          </InputAdornment>
+        ),
+      }}
     />
     <TextField
      id="password-input"
@@ -44,6 +55,13 @@ class TextFields extends React.Component {
      className={classes.textField}
      type="password"
      margin="normal"
+     InputProps={{
+      startAdornment: (
+        <InputAdornment position="start">
+          <Lock />
+        </InputAdornment>
+      ),
+    }}
     />
     </form>
     </div>

@@ -10,6 +10,7 @@ const Trail = mongoose.model('Trail', {
 exports.types = `
 type Query {
   hello(name: String): String!
+  trails: [Trail]
 }
 
 type Trail{
@@ -27,6 +28,7 @@ type Mutation{
 exports.resolve = {
     Query: {
       hello: (_, { name }) => `Hello ${name || 'World'}`,
+      trails: ()=> Trail.find(),
     },
 
     Mutation: {

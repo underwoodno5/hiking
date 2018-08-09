@@ -1,15 +1,15 @@
 import React from 'react';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 
 
-//parsing out data through graphql
 const TrailsQuery = gql`
 {
   trails{
@@ -36,12 +36,21 @@ const data = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-class SimpleTable extends React.Component{
-  render(){
-    const{data} = this.props;
+class HikeList extends React.Component {
+ render() {
     console.log(this.props);
-  return (
+    const{
+        data: {loading, trails}
+    } = this.props;
+    if(loading){
+      return null;
+    }  
 
+    return (
+    <div>
+    <div>
+    {trails.map(trail => <div key={`${trail.id}-trail-item`}>{trail.text}</div>)}
+    </div>
     <Paper className="root">
       <Table className="table">
         <TableHead>
@@ -70,9 +79,10 @@ class SimpleTable extends React.Component{
         </TableBody>
       </Table>
     </Paper>
-  );
+    </div>
+
+    );
   }
 }
 
-
-export default graphql(TrailsQuery)(SimpleTable);
+export default graphql(TrailsQuery)(HikeList);

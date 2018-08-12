@@ -10,6 +10,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import LoginWrapped from './login';
+import SignupWrapped from './signup';
 
 
 
@@ -70,8 +71,8 @@ class Nav extends React.Component {
           <Typography variant="title" color="inherit" className="flex">
             News
           </Typography>
-          <LoginWrapped>
-          </LoginWrapped>
+          <LoginWrapped />
+          <SignupWrapped />
         </Toolbar>
       </AppBar>
        <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>

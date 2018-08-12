@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import HikeList from './components/hikeslist';
+import CenteredTabs from './components/tab'
 
 import Nav from './components/nav';
 
@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <div>
       <Nav />
-      <HikeList />
+      <CenteredTabs />
       </div>
     );
   }

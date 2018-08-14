@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
-import CenteredTabs from './components/tab'
-
 import Nav from './components/nav';
-
+import CenteredTabs from './components/tab'
 
 
 
 class App extends Component {
+
   render() {
     return (
       <div>
-      <Nav />
-      <CenteredTabs />
+        <Nav />
+        <CenteredTabs />
       </div>
     );
   }

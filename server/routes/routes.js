@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt')
 
 
-//-----------------------
-//------- Mongoose Models
-//-----------------------
+//---------------------
+//----- Mongoose Models
+//---------------------
 
 const User = mongoose.model('User', {
     name: String,
@@ -34,6 +34,10 @@ const Activity = mongoose.model('Activity', {
     rating: Number
 });
 
+//------------------
+//------- GQL SETUP
+//------------------
+
 exports.types = `
 type Query {
   hello(name: String): String!
@@ -46,7 +50,7 @@ type Query {
 type User{
     id: ID!
     name: String!
-    password: String!
+    password: String
 }
 
 type Trail{
@@ -86,7 +90,12 @@ type Mutation{
 
     createUser(
         name: String!,
-        password: String!,
+        password: String!
+    ): User
+
+    checkUser(
+        namecheck: String!,
+        passcheck: String!
     ): User
 
     createCamp(
@@ -107,6 +116,7 @@ type Mutation{
 
 exports.resolve = {
     Query: {
+
       hello: (_, { name }) => `Hello ${name || 'World'}`,
       trails: ()=> Trail.find(),
       users: ()=> User.find(),
@@ -116,11 +126,31 @@ exports.resolve = {
     },
 
     Mutation: {
-        createUser: async (_, { name, password}) => {
+        createUser: async (_, { name, password }) => {
+            //escaping html injections
+            if(password.includes('{')|| password.includes('}')){
+                return console.log("whoops");
+            };
+            //hashing pass
             password = await bcrypt.hash(password, 12);
             const user = await new User({ name, password });
             await user.save();
             return user;
+        },
+
+        checkUser: async (_, {namecheck, passcheck})=> {
+            //doing our login comparisons
+            let user = await User.findOne({name : namecheck});
+            if(!user){
+                return console.log('no user');
+            }else{
+                console.log('user exists');
+            }
+            if (!bcrypt.compareSync(passcheck, user.password)){
+                console.log('bad pass');
+            }else{
+                console.log('good pass');
+            }
         },
 
         createTrail: async (_, { name, location, difficulty, rating  }) => {

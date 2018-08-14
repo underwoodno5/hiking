@@ -1,70 +1,63 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Lock from '@material-ui/icons/Lock';
-import gql from 'graphql-tag';
 
 
 
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
-  menu: {
-    width: 200,
-  },
-});
 
-class SignupField extends React.Component {
 
+class SignupForm extends React.Component {
+
+
+  //sets initial states so we con't get a component error
     state={
-        text: ""
+        name: '',
+        password:''
     };
 
-    handleChange = (e) => {
-        const newText = e.target.value;
-        console.log(newText);
-        this.setState({
-            text: newText
-        });
-    };
+  //these two functions handle the logging of keys typed into our entry forms
+    handleName = e =>{
+      const newName = e.target.value;
+      this.setState({
+          name: newName
+      });
+  };
 
-    handleKeyDown = (e) => {
-        if(e.key === 'enter'){
-            this.props.submit(this.state.text);
-        }
-    };
+  handlePass = e =>{
+      const newPassword = e.target.value;
+      this.setState({
+          password: newPassword
+      });
+  };
 
-  
-  render(){
-    const { classes } = this.props;
-    const {text} = this.state 
-   
+  //clears our entry forms and submits the data on enter press
+  handleKeyDown = e => {
+    if (e.key === "Enter"){
+        this.props.submit(this.state.name, this.state.password);
+        this.setState({ name:"", password:""});
+    }
+};
+
+render(){
+  const { name } = this.state;
+  const {password} = this.state;
 
     return(
       <div>
       <Typography variant="title" color="inherit" className="flex">
       Signup
     </Typography>
-      <form className={classes.container} noValidate autoComplete="off">
+      <form className="container" noValidate autoComplete="off">
       <TextField
-      id="name"
       label="Name"
-      onChange = {this.handleChange}
-      onKeyDown = {this.handleKeyDown}
-      className={classes.textField}
-      value={text}
-      margin="normal" 
+      onChange={this.handleName}
+      onKeyDown={this.handleKeyDown}
+      className="textField"
+      value={name}
+      fullWidth margin="normal" 
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
@@ -74,11 +67,12 @@ class SignupField extends React.Component {
       }}
     />
     <TextField
-     id="password-input"
      label="Password"
-     className={classes.textField}
-     type="password"
-     margin="normal"
+     onChange={this.handlePass}
+     onKeyDown={this.handleKeyDown}
+     className="textField"
+     value={password}
+     fullWidth margin="normal"
      InputProps={{
       startAdornment: (
         <InputAdornment position="start">
@@ -93,8 +87,5 @@ class SignupField extends React.Component {
     );
   }
 }
-SignupField.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
-export default withStyles(styles)(SignupField);
+export default SignupForm;

@@ -26,6 +26,11 @@ body{
   flex-grow: 1;
 }
 
+
+.title{
+  margin-left:auto !important;
+}
+
 .hikeList{
   width: 80%;
   margin:20px auto;
@@ -38,8 +43,7 @@ body{
 }
 
 .menuButton {
-  margin-left: -12;
-  margin-right: 20;
+  margin-right:10vw !important;
 }
 
 .tabindex{
@@ -47,9 +51,12 @@ body{
 }
 .login{
   display: inline-block !important;
-  margin-left: auto !important;
   margin-right: 2vw !important;
   color:white !important;
+}
+.login:nth-of-type(1){
+  margin-left: auto !important;
+  margin-right:.5vw !important;
 }
 
 .login button{

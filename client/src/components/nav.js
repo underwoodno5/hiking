@@ -68,8 +68,8 @@ class Nav extends React.Component {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="title" color="inherit" className="flex">
-            News
+          <Typography variant="title" color="inherit" className="title">
+            Go for an adventure
           </Typography>
           <LoginWrapped />
           <SignupWrapped />

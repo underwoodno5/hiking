@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -9,38 +7,54 @@ import Lock from '@material-ui/icons/Lock';
 
 
 
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
-  menu: {
-    width: 200,
-  },
-});
+class LoginForm extends React.Component {
+    //sets initial states so we con't get a component error
+    state={
+      namecheck: '',
+      passcheck:''
+  };
 
-class TextFields extends React.Component {
+    //these two functions handle the logging of keys typed into our entry forms
+    handleName = e =>{
+      const newName = e.target.value;
+      this.setState({
+          namecheck: newName
+      })
+  };
+
+
+  handlePass = e =>{
+    const newPassword = e.target.value;
+    this.setState({
+        passcheck: newPassword
+    })
+};
+  //clears our entry forms and submits the data on enter press
+  handleKeyDown = e => {
+    if (e.key === "Enter"){
+        this.props.submit(this.state.namecheck, this.state.passcheck);
+        this.setState({ namecheck:"", passcheck:""});
+    }
+};
   
   render(){
-    const { classes } = this.props;
+    const { namecheck } = this.state;
+    const {passcheck} = this.state;
 
     return(
       <div>
       <Typography variant="title" color="inherit" className="flex">
       Login
     </Typography>
-      <form className={classes.container} noValidate autoComplete="off">
+      <form className="container" noValidate autoComplete="off">
 
       <TextField
-      id="name"
       label="Name"
-      className={classes.textField}
-      margin="normal"
+      onChange={this.handleName}
+      onKeyDown={this.handleKeyDown}
+      className="textField"
+      value={namecheck}
+      fullWidth margin="normal" 
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
@@ -50,11 +64,12 @@ class TextFields extends React.Component {
       }}
     />
     <TextField
-     id="password-input"
      label="Password"
-     className={classes.textField}
-     type="password"
-     margin="normal"
+     onChange={this.handlePass}
+     onKeyDown={this.handleKeyDown}
+     className="textField"
+     value={passcheck}
+     fullWidth margin="normal"
      InputProps={{
       startAdornment: (
         <InputAdornment position="start">
@@ -69,8 +84,5 @@ class TextFields extends React.Component {
     );
   }
 }
-TextFields.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
-export default withStyles(styles)(TextFields);
+export default LoginForm;

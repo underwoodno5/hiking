@@ -3,10 +3,32 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-import TextField from './loginform';
+import LoginForm from './loginform';
+import gql from 'graphql-tag';
+import { graphql, compose } from 'react-apollo';
 
 
 
+//-------------
+//-- GQL SETUP
+//-------------
+
+ //--- Parsing Queries --\\
+
+
+  const CheckMutation = gql`
+  mutation($namecheck: String!, $passcheck: String!){
+   checkUser(namecheck: $namecheck, passcheck: $passcheck){
+     namecheck
+     passcheck
+     id
+    }
+  }
+  `;
+
+//----------------
+//-- MODAL STYLES
+//----------------
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -29,6 +51,19 @@ const styles = theme => ({
 });
 
 class Login extends React.Component {
+  //---GQL function--\\
+
+checkUser = async (namecheck, passcheck) => {
+  await this.props.checkUser({
+    variables: {
+      namecheck,
+      passcheck
+    },
+  });
+}
+
+//---Modal setup--\\
+
   state = {
     open: false,
   };
@@ -53,8 +88,7 @@ class Login extends React.Component {
         >
           <div style={getModalStyle()} className={classes.paper}>
 
-            <TextField>
-            </TextField>
+            <LoginForm submit={this.checkUser} />
           </div>
         </Modal>
       </div>
@@ -69,4 +103,6 @@ Login.propTypes = {
 // We need an intermediary variable for handling the recursive nesting.
 const LoginWrapped = withStyles(styles)(Login);
 
-export default LoginWrapped;
+export default compose(
+  graphql(CheckMutation, {name: "checkUser"}),
+)(LoginWrapped);

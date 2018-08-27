@@ -1,6 +1,7 @@
 //const Todo = require('../models/hikeschema')
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 
 //---------------------
@@ -9,7 +10,10 @@ const bcrypt = require('bcrypt')
 
 const User = mongoose.model('User', {
     name: String,
-    password: String
+    password: String,
+    namecheck: String,
+    passcheck: String,
+    token: String
 });
 
 const Trail = mongoose.model('Trail', {
@@ -51,6 +55,8 @@ type User{
     id: ID!
     name: String!
     password: String
+    namecheck: String
+    passcheck: String
 }
 
 type Trail{
@@ -90,12 +96,13 @@ type Mutation{
 
     createUser(
         name: String!,
-        password: String!
+        password: String!,
     ): User
 
     checkUser(
         namecheck: String!,
-        passcheck: String!
+        passcheck: String!,
+        usertoken: String
     ): User
 
     createCamp(
@@ -150,6 +157,11 @@ exports.resolve = {
                 console.log('bad pass');
             }else{
                 console.log('good pass');
+               jwt.sign({ username: user }, 'secretkey',(err, token) => {
+                   console.log(username);
+                   console.log( token);    
+                    
+                  });
             }
         },
 

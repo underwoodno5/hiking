@@ -11,9 +11,9 @@ const jwt = require('jsonwebtoken');
 const User = mongoose.model('User', {
     name: String,
     password: String,
+    jwt: String,
     namecheck: String,
     passcheck: String,
-    token: String
 });
 
 const Trail = mongoose.model('Trail', {
@@ -49,6 +49,7 @@ type Query {
   trails: [Trail]
   camps: [Camp]
   activities: [Activity]
+  me: User
 }
 
 type User{
@@ -57,6 +58,7 @@ type User{
     password: String
     namecheck: String
     passcheck: String
+    jwt: String
 }
 
 type Trail{
@@ -97,12 +99,13 @@ type Mutation{
     createUser(
         name: String!,
         password: String!,
+        jwt: String,
     ): User
 
     checkUser(
         namecheck: String!,
         passcheck: String!,
-        usertoken: String
+        jwt: String,
     ): User
 
     createCamp(
@@ -140,29 +143,34 @@ exports.resolve = {
             };
             //hashing pass
             password = await bcrypt.hash(password, 12);
+            //creating a new user
             const user = await new User({ name, password });
+            //making the web token
+            console.log(user._id);
+            user.jwt = await jwt.sign({_id: user._id}, 'secretkey');
+            //saving
             await user.save();
             return user;
         },
 
         checkUser: async (_, {namecheck, passcheck})=> {
-            //doing our login comparisons
+            //finding our user through login name
             let user = await User.findOne({name : namecheck});
+            //error log if no user
             if(!user){
                 return console.log('no user');
             }else{
                 console.log('user exists');
             }
-            if (!bcrypt.compareSync(passcheck, user.password)){
-                console.log('bad pass');
+            //check password validity
+            const valid = bcrypt.compareSync(passcheck, user.password)
+            //error log if pass is bad
+            if(!valid){
+                return console.log('bad pass');
             }else{
                 console.log('good pass');
-               jwt.sign({ username: user }, 'secretkey',(err, token) => {
-                   console.log(username);
-                   console.log( token);    
-                    
-                  });
             }
+            return user;
         },
 
         createTrail: async (_, { name, location, difficulty, rating  }) => {

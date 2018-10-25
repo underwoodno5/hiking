@@ -19,16 +19,18 @@ const UsersQuery = gql`
     id
     name
     password
+    jwt
   }
 }
 `;
 
 const CreateMutation = gql`
-mutation($name: String!, $password: String!){
+mutation($name: String!, $password: String! ){
  createUser(name: $name, password: $password){
    name
    password
    id
+   jwt
   }
 }
 `;
@@ -67,7 +69,7 @@ createUser = async (name, password) => {
   await this.props.createUser({
     variables: {
       name,
-      password
+      password,
     },
     update: store => {
       const data = store.readQuery({ query: UsersQuery });
